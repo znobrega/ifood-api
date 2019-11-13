@@ -40,14 +40,19 @@ client.query(
 
 ```
 
-## GUI para o Postgres
+## Postbird: GUI para o Postgres
 
+<p>Utilizando uma GUI você tem consegue obter informaçes sobre o estado do seu banco de dados mais facilmente.</p>
 
 Download: <a href="https://electronjs.org/apps/postbird"> Postbird </a>
 
-<p>O ideal é usar a connectionUrl, pois é necessário passar uma configuração que a GUI do Postbird não fornece</p>
+![home-Postbird](/home-postbird.png)
+<p>Para fazer a conexão com o seu banco de dados, é só preencher com os dados do mesmo.</p>
+<p>Utilizando o Heroku, o ideal é se conectar pela aba ConnectionUrl ou Heroku, prefiro pela ConnectionUrl porque a equipe inteira pode se conectar de forma mais facilmente.</p>
 
-- é necessário adiciona '?ssl=true' no final da url connection
+- Conexão:
+
+>é necessário adiciona '?ssl=true' no final da url connection
 
 ### Como deve ser:
 
@@ -55,8 +60,15 @@ Download: <a href="https://electronjs.org/apps/postbird"> Postbird </a>
   postgres://xfhgkvvyxyucxp:7ccb2d56e151734bf418bf1facb323894c62f2b1fd5f4ab092992892a58ff780@ec2-174-129-253-62.compute-1.amazonaws.com:5432/dcq1ndmqjjjtcb?ssl=true
 ```
 
-### url padrão do heroky
+### url padrão cedida pelo heroku
 
 ```
   postgres://xfhgkvvyxyucxp:7ccb2d56e151734bf418bf1facb323894c62f2b1fd5f4ab092992892a58ff780@ec2-174-129-253-62.compute-1.amazonaws.com:5432/dcq1ndmqjjjtcb
+  
 ```
+
+![conexão-postbird](/home-postbird.png)
+
+- Caso a conexão tenha sido um sucesso, deve aparecer algo assim:
+![info-postbird](/home-postbird.png)
+
