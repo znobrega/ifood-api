@@ -67,8 +67,8 @@ Download: <a href="https://electronjs.org/apps/postbird"> Postbird </a>
   
 ```
 
-![conexão-postbird](/home-postbird.png)
+![conexão-postbird](/conexão-postbird.png)
 
 - Caso a conexão tenha sido um sucesso, deve aparecer algo assim:
-![info-postbird](/home-postbird.png)
+![info-postbird](/info-postbird.png)
 
