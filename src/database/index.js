@@ -17,8 +17,8 @@ class Database {
 
     this.client.connect();
 
-    this.client.query("SELECT NOW()", (err, res) => {
-      console.log(err, res);
+    this.client.query("SELECT NOW()", err => {
+      if (!err) console.log("Database connected!");
     });
   }
 }

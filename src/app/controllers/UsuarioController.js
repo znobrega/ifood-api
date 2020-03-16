@@ -1,18 +1,14 @@
 import database from "../../database";
-import Usuario from "../models/Usuario";
+import Usuario from "../repositories/UsuarioRepository";
+import Usuario from "../repositories/PedidoRepository";
+import Usuario from "../repositories/ComidaRepository";
+import Usuario from "../repositories/DetalhesPedidoRepository";
 
 class UsuarioController {
   async store(req, res) {
-    database.client.query(
-      "CREATE TABLE helloworld(name VARCHAR(10), age INT)",
-      (err, res) => {
-        console.log(err, res);
-      }
-    );
-
     try {
       const response = await database.client.query(
-        "INSERT INTO helloworld(name, age) values('carlos', 21) "
+        "INSERT INTO helloworld(name, age) values('carlos', 21)"
       );
 
       return res.json(response);

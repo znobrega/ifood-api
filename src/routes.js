@@ -2,14 +2,12 @@ import express from "express";
 
 const routes = new express.Router();
 
-import database from "./database";
-
 import UsuarioController from "./app/controllers/UsuarioController";
+import RestauranteController from "./app/controllers/RestauranteController";
 
-routes.get("/", UsuarioController.store);
-
-routes.get("/insert", UsuarioController.store);
-
-routes.get("/show", UsuarioController.index);
+routes.get("/", (req, res) => {
+  return "ok";
+});
+routes.post("/criarrestaurante", RestauranteController.store);
 
 export default routes;
