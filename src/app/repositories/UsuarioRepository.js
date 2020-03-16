@@ -14,7 +14,7 @@ class UsuarioRepository {
           nome VARCHAR(255) NOT NULL,
           senha VARCHAR(255) NOT NULL,
           email VARCHAR(255) NOT NULL,
-          endereço VARCHAR(255) NOT NULL,
+          endereco VARCHAR(255) NOT NULL,
           categoria VARCHAR(255),
           status VARCHAR(255),
           tipo_entrega VARCHAR(255)

@@ -5,13 +5,13 @@ import database from "../../database";
 // gratis: descontados R$ 2,00 por pedido
 // rapida: acrescentados R$ 2,00 por pedido
 
-class RestauranteRepository {
-  async criarRestaurante(restaurante) {
+class ClienteRepository {
+  async criarCliente(cliente) {
     try {
       const result = await database.client.query(
-        `INSERT INTO usuario(nome, provedor, senha, email, endereco, categoria, status, tipo_entrega) 
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8);`,
-        restaurante
+        `INSERT INTO usuario(nome, senha, email, endereco, provedor) 
+        VALUES($1, $2, $3, $4, $5);`,
+        cliente
       );
 
       console.log(result);
@@ -22,4 +22,4 @@ class RestauranteRepository {
   }
 }
 
-export default new RestauranteRepository();
+export default new ClienteRepository();
