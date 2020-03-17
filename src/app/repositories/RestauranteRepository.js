@@ -20,6 +20,21 @@ class RestauranteRepository {
       return err;
     }
   }
+
+  async findOne(id_restaurante) {
+    try {
+      const result = await database.client.query(
+        `SELECT * FROM usuario 
+        WHERE id = $1`,
+        id_restaurante
+      );
+
+      console.log(result);
+      return result.command;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 export default new RestauranteRepository();

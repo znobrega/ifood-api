@@ -4,16 +4,7 @@ import ClienteRepository from "../repositories/ClienteRepository";
 
 class ClienteController {
   async store(req, res) {
-    const {
-      nome,
-      senha,
-      email,
-      endereco,
-      provedor,
-      categoria,
-      status,
-      tipo_entrega
-    } = req.body;
+    const { nome, senha, email, endereco, provedor } = req.body;
 
     if (provedor) {
       return res.json({ error: "Cadastro do cliente incompleto" });

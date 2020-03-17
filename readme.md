@@ -46,7 +46,7 @@ client.query(
 
 Download: <a href="https://electronjs.org/apps/postbird"> Postbird </a>
 
-![home-Postbird](/home-postbird.png)
+![home-Postbird](./images/home-postbird.png)
 <p>Para fazer a conexão com o seu banco de dados, é só preencher com os dados do mesmo.</p>
 <p>Utilizando o Heroku, o ideal é se conectar pela aba ConnectionUrl ou Heroku, prefiro pela ConnectionUrl porque a equipe inteira pode se conectar de forma mais facilmente.</p>
 
@@ -67,8 +67,8 @@ Download: <a href="https://electronjs.org/apps/postbird"> Postbird </a>
   
 ```
 
-![conexão-postbird](/conexão-postbird.png)
+![conexão-postbird](./images/conexão-postbird.png)
 
 - Caso a conexão tenha sido um sucesso, deve aparecer algo assim:
-![info-postbird](/info-postbird.png)
+![info-postbird](./images/info-postbird.png)
 
