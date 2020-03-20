@@ -20,6 +20,32 @@ class ClienteRepository {
       return err;
     }
   }
+
+  async findAll() {
+    try {
+      const result = await database.client.query("SELECT * FROM usuario");
+
+      const clientes = result.rows.filter(usuario => !usuario.provedor);
+      return clientes;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async findOne(idCliente) {
+    try {
+      const result = await database.client.query(
+        `SELECT * FROM usuario 
+        WHERE id = $1`,
+        idCliente
+      );
+
+      console.log(result);
+      return result.command;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 export default new ClienteRepository();

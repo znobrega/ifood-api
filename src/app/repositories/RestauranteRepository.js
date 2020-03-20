@@ -35,6 +35,17 @@ class RestauranteRepository {
       return err;
     }
   }
+
+  async findAll() {
+    try {
+      const result = await database.client.query("SELECT * FROM usuario");
+
+      const restaurantes = result.rows.filter(usuario => usuario.provedor)
+      return restaurantes;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 export default new RestauranteRepository();

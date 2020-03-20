@@ -11,8 +11,12 @@ routes.get("/", (req, res) => {
   return res.json({ ok: "ok" });
 });
 
-routes.post("/criarrestaurante", RestauranteController.store);
-routes.post("/criarcliente", ClienteController.store);
-routes.get("/adicionarcomida", ComidaController.store);
+routes.post("/restaurante/criar", RestauranteController.store);
+routes.get("/restaurante/listar", RestauranteController.index);
+
+routes.get("/comida/adicionarcomida", ComidaController.store);
+
+routes.post("/cliente/criar", ClienteController.store);
+routes.get("/cliente/listar", ClienteController.index);
 
 export default routes;

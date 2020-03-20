@@ -25,11 +25,21 @@ class ClienteController {
 
   async index(req, res) {
     try {
-      const response = await database.client.query("SELECT * FROM helloworld");
+      const clientes = await ClienteRepository.findAll();
+      return res.json({ clientes });
+    } catch (err) {
+      console.log(err);
+      return res.json({ error: err });
+    }
+  }
 
-      return res.json(response);
-    } catch {
-      return res.json({ error: "ERRROR" });
+  async show(req, res) {
+    try {
+      const cliente = await ClienteRepository.findOne(req.body.id_cliente);
+      return res.json({ cliente });
+    } catch (err) {
+      console.log(err);
+      return res.json({ error: err });
     }
   }
 }

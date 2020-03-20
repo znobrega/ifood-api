@@ -29,6 +29,28 @@ class RestauranteController {
 
     return res.json({ restaurante: restaurante });
   }
+
+  async index(req, res) {
+    try {
+      const restaurantes = await RestauranteRepository.findAll();
+      return res.json({ restaurantes });
+    } catch (err) {
+      console.log(err);
+      return res.json({ error: err });
+    }
+  }
+
+  async show(req, res) {
+    try {
+      const restaurante = await RestauranteRepository.findOne(
+        req.body.id_restaurante
+      );
+      return res.json({ restaurante });
+    } catch (err) {
+      console.log(err);
+      return res.json({ error: err });
+    }
+  }
 }
 
 export default new RestauranteController();
