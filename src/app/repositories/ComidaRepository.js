@@ -7,12 +7,12 @@ class ComidaRepository {
     try {
       const result = await database.client.query(
         `INSERTO INTO comida(id_restaurante, nome, preco, descricao) 
-        VALUES ($1, $2, $3, $4)`,
+        VALUES ($1, $2, $3, $4) RETURNING *`,
         data
       );
 
       console.log(result);
-      return result.command;
+      return result.rows[0];
     } catch (err) {
       return err;
     }

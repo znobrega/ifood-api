@@ -10,12 +10,12 @@ class ClienteRepository {
     try {
       const result = await database.client.query(
         `INSERT INTO usuario(nome, senha, email, endereco, provedor) 
-        VALUES($1, $2, $3, $4, $5);`,
+        VALUES($1, $2, $3, $4, $5) RETURNING *;`,
         cliente
       );
 
       console.log(result);
-      return result.command;
+      return result.rows[0];
     } catch (err) {
       return err;
     }

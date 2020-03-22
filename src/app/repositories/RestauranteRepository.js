@@ -10,12 +10,13 @@ class RestauranteRepository {
     try {
       const result = await database.client.query(
         `INSERT INTO usuario(nome, provedor, senha, email, endereco, categoria, status, tipo_entrega) 
-        VALUES($1, $2, $3, $4, $5, $6, $7, $8);`,
+        VALUES($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *;`,
         restaurante
       );
 
       console.log(result);
-      return result.command;
+      console.log(result.rows[0])
+      return result.rows[0];
     } catch (err) {
       return err;
     }

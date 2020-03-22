@@ -8,12 +8,12 @@ class DetalhesPedidoRepository {
     try {
       const result = await database.client.query(
         `INSERTO INTO comida(id_pedido, id_comida, quantidade) 
-        VALUES ($1, $2, $3)`,
+        VALUES ($1, $2, $3) RETURNING *`,
         data
       );
 
       console.log(result);
-      return result.command;
+      return result.rows[0];
     } catch (err) {
       return err;
     }
