@@ -37,8 +37,8 @@ class Database {
         id SERIAL PRIMARY KEY,
         id_cliente INTEGER NOT NULL, 
         id_restaurante INTEGER NOT NULL, 
-        data TIMESTAMP NOT NULL,
-        preco_total MONEY NOT NULL,
+        data TIMESTAMP NOT NULL DEFAULT NOW(),
+        preco_total MONEY NOT NULL DEFAULT 0,
         frete MONEY NOT NULL DEFAULT 2,
         FOREIGN KEY (id_cliente) REFERENCES usuario(id), 
         FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
@@ -131,6 +131,32 @@ class Database {
     `,
       err => {
         if (!err) console.log("COMIDAS CRIADOS!");
+        else console.log(err);
+      }
+    );
+
+    this.client.query(
+      `
+      INSERT INTO pedido(id_restaurante, id_cliente, )
+      VALUES 
+      (1, 7),
+      (2, 8),
+    `,
+      err => {
+        if (!err) console.log("PEDIDOS CRIADOS!");
+        else console.log(err);
+      }
+    );
+
+    this.client.query(
+      `
+      INSERT INTO detalhes_pedido(id_pedido, id_comida, quantidade )
+      VALUES 
+      (1, 1, 2),
+      (2, 2, 3),
+    `,
+      err => {
+        if (!err) console.log("DETALHES PEDIDOS CRIADOS!");
         else console.log(err);
       }
     );
