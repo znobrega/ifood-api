@@ -32,6 +32,16 @@ class Database {
         status VARCHAR(255),
         tipo_entrega VARCHAR(255)
       );
+      
+      CREATE TABLE IF NOT EXISTS comida(
+        id SERIAL PRIMARY KEY,
+        id_restaurante INTEGER NOT NULL, 
+        nome VARCHAR(255) NOT NULL, 
+        descricao TEXT NOT NULL,
+        preco MONEY DEFAULT 10 NOT NULL,
+        promocao BOOLEAN DEFAULT FALSE,
+        FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
+      );
 
       CREATE TABLE IF NOT EXISTS pedido(
         id SERIAL PRIMARY KEY,
@@ -44,21 +54,11 @@ class Database {
         FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
       );
 
-      CREATE TABLE IF NOT EXISTS comida(
-        id SERIAL PRIMARY KEY,
-        id_restaurante INTEGER NOT NULL, 
-        nome VARCHAR(255) NOT NULL, 
-        descricao TEXT NOT NULL,
-        preco MONEY DEFAULT 10 NOT NULL,
-        promocao BOOLEAN DEFAULT FALSE,
-        FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
-      );
-
       CREATE TABLE IF NOT EXISTS detalhes_pedido(
         id SERIAL PRIMARY KEY,
         id_pedido INTEGER NOT NULL, 
         id_comida INTEGER NOT NULL, 
-        preco_comida MONEY NOT NULL, 
+        preco_comida MONEY NOT NULL DEFAULT 10, 
         quantidade INTEGER NOT NULL DEFAULT 1,
         data TIMESTAMP DEFAULT NOW(),
         FOREIGN KEY (id_pedido) REFERENCES pedido(id),
@@ -102,64 +102,66 @@ class Database {
 
     `,
       err => {
+        this.client.query(
+          `
+          INSERT INTO comida(id_restaurante, nome, preco, descricao)
+          VALUES 
+          (5, 'Sushi', 5, 'peça de peixe'),
+          (5, 'Temaki', 20, 'temaki recheado'),
+          (6, 'yakisoba', 5, 'macarrçao chines'),
+          (6, 'polvo com camarão', 20, 'frutos do mar'),
+          (7, 'Pizza de americana', 30, 'queijo, palmito, ervilha, ovo'),
+          (7, 'Pizza de bacon', 29, 'catupiry, bacon'),
+          (8, 'Arroz integral', 10, 'arroz'),
+          (8, 'Arroz Branco', 10, 'arroz'),
+          (8, 'Arroz com cenoura', 10, 'arroz'),
+          (8, 'Carne cozida', 10, 'carne'),
+          (8, 'Frango grelhado', 10, 'frango'),
+          (9, 'Salmão frito', 10, 'peixe'),
+          (9, 'Bacalhau frito', 10, 'peixe'),
+          (9, 'Baiacu cozido', 10, 'peixe'),
+          (10, 'Espaguete', 10, 'macarrão'),
+          (10, 'churrasco', 10, 'carne'),
+          (10, 'salada', 10, 'legumes');
+        `,
+          err => {
+            
+            this.client.query(
+              `
+              INSERT INTO pedido(id_cliente, id_restaurante)
+              VALUES 
+              (1, 7),
+              (2, 8);
+            `,
+              err => {
+                this.client.query(
+                `
+                INSERT INTO detalhes_pedido(id_pedido, id_comida, quantidade) 
+                VALUES 
+                (1, 1, 2),
+                (2, 2, 3);
+              `,
+                err => {
+                  if (!err) console.log("DETALHES PEDIDOS CRIADOS!");
+                  else console.log(err);
+                }
+              );
+                if (!err) console.log("PEDIDOS CRIADOS!");
+                else console.log(err);
+              }
+            );
+            if (!err) console.log("COMIDAS CRIADOS!");
+            else console.log(err);
+          }
+        );
+
         if (!err) console.log("RESTAURANTES CRIADOS!");
         else console.log(err);
       }
     );
 
-    this.client.query(
-      `
-      INSERT INTO comida(id_restaurante, nome, preco, descricao)
-      VALUES 
-      (5, 'Sushi', 5, 'peça de peixe'),
-      (5, 'Temaki', 20, 'temaki recheado'),
-      (6, 'yakisoba', 5, 'macarrçao chines'),
-      (6, 'polvo com camarão', 20, 'frutos do mar'),
-      (7, 'Pizza de americana', 30, 'queijo, palmito, ervilha, ovo'),
-      (7, 'Pizza de bacon', 29, 'catupiry, bacon'),
-      (8, 'Arroz integral', 10, 'arroz'),
-      (8, 'Arroz Branco', 10, 'arroz'),
-      (8, 'Arroz com cenoura', 10, 'arroz'),
-      (8, 'Carne cozida', 10, 'carne'),
-      (8, 'Frango grelhado', 10, 'frango'),
-      (9, 'Salmão frito', 10, 'peixe'),
-      (9, 'Bacalhau frito', 10, 'peixe'),
-      (9, 'Baiacu cozido', 10, 'peixe'),
-      (10, 'Espaguete', 10, 'macarrão'),
-      (10, 'churrasco', 10, 'carne'),
-      (10, 'salada', 10, 'legumes');
-    `,
-      err => {
-        if (!err) console.log("COMIDAS CRIADOS!");
-        else console.log(err);
-      }
-    );
-
-    this.client.query(
-      `
-      INSERT INTO pedido(id_restaurante, id_cliente, )
-      VALUES 
-      (1, 7),
-      (2, 8),
-    `,
-      err => {
-        if (!err) console.log("PEDIDOS CRIADOS!");
-        else console.log(err);
-      }
-    );
-
-    this.client.query(
-      `
-      INSERT INTO detalhes_pedido(id_pedido, id_comida, quantidade )
-      VALUES 
-      (1, 1, 2),
-      (2, 2, 3),
-    `,
-      err => {
-        if (!err) console.log("DETALHES PEDIDOS CRIADOS!");
-        else console.log(err);
-      }
-    );
+      
+      
   }
 }
 

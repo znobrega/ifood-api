@@ -41,7 +41,7 @@ class ClienteRepository {
       );
 
       console.log(result);
-      return result.command;
+      return result.rows[0];
     } catch (err) {
       return err;
     }

@@ -47,6 +47,20 @@ class RestauranteRepository {
       return err;
     }
   }
+
+  async findByDescricao(palavra) {
+    try {
+      const result = await database.client.query(`
+        SELECT * FROM usuario 
+        INNER JOIN comida
+        ON usuario.id = comida.id_restaurante
+        WHERE comida.descricao LIKE '%$1%'
+
+      `, palavra)
+    } catch(err) {
+      return err
+    }
+  }
 }
 
 export default new RestauranteRepository();
