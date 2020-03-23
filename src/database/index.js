@@ -50,6 +50,7 @@ class Database {
         nome VARCHAR(255) NOT NULL, 
         descricao TEXT NOT NULL,
         preco MONEY DEFAULT 10 NOT NULL,
+        promocao BOOLEAN DEFAULT FALSE,
         FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
       );
 
