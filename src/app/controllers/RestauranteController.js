@@ -52,6 +52,18 @@ class RestauranteController {
       return res.json({ error: err });
     }
   }
+
+  async restauranteByName(req, res) {
+    try {
+      const restaurante = await RestauranteRepository.findRestauranteByName(
+        req.body.nome_restaurante
+      );
+      
+      return res.json({ restaurante });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
 }
 
 export default new RestauranteController();

@@ -35,6 +35,22 @@ class ComidaRepository {
       return err;
     }
   }
+
+  async findComidaByName(nome_comida) {
+    console.log(nome_comida)
+    try {
+      const result = await database.client.query(`
+        SELECT * FROM comida
+        INNER JOIN usuario
+        ON comida.id_restaurante = usuario.id  
+        WHERE comida.nome LIKE $1
+      `, [`%${nome_comida}%`])
+
+      return result.rows
+    } catch (err) {
+      return err
+    }
+  }
 }
 
 export default new ComidaRepository();

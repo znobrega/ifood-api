@@ -1,4 +1,5 @@
 import ComidaRepository from "../repositories/ComidaRepository";
+import PedidoRepository from "../repositories/PedidoRepository"
 
 class PedidoController {
   async store(req, res) {
@@ -29,6 +30,12 @@ class PedidoController {
     const comidas = await ComidaRepository.findAll(1);
 
     return res.json({comidas});
+  }
+
+  async historicoPedidosCliente(req, res) {
+    const pedidos = await PedidoRepository.historicoCliente(req.body.id_cliente);
+
+    return res.json({pedidos})
   }
 }
 

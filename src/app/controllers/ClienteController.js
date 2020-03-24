@@ -40,6 +40,7 @@ class ClienteController {
       return res.json({ error: err });
     }
   }
+
 }
 
 export default new ClienteController();

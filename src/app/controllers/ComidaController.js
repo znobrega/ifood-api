@@ -47,6 +47,19 @@ class ComidaController {
       return res.json(err)
     }
   }
+
+  async comidaByName(req, res) {
+    console.log(req.body)
+    try {
+      const comidas = await ComidaRepository.findComidaByName(
+        req.body.nome_comida
+      );
+      
+      return res.json({ comidas });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
 }
 
 export default new ComidaController();

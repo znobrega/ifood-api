@@ -17,6 +17,35 @@ class PedidoRepository {
       return err;
     }
   }
+
+  async historicoCliente(id_cliente) {
+    console.log(id_cliente)
+    console.log(id_cliente)
+    console.log(id_cliente)
+    console.log(id_cliente)
+
+    console.log(`
+    SELECT * FROM pedido
+    INNER JOIN detalhes_pedido
+    ON pedido.id = detalhes_pedido.id_pedido
+    INNER JOIN comida
+    ON detalhes_pedido.id_comida = comida.id
+    WHERE pedido.id_cliente = ${id_cliente}
+  `)
+    try {
+      const result = await database.client.query(`
+        SELECT * FROM pedido
+        INNER JOIN detalhes_pedido
+        ON pedido.id = detalhes_pedido.id_pedido
+        INNER JOIN comida
+        ON detalhes_pedido.id_comida = comida.id
+        WHERE pedido.id_cliente = $1;
+      `, [id_cliente]);
+      return result.rows;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 export default new PedidoRepository();

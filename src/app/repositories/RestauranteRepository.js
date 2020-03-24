@@ -30,8 +30,7 @@ class RestauranteRepository {
         id_restaurante
       );
 
-      console.log(result);
-      return result.command;
+      return result.rows[0];
     } catch (err) {
       return err;
     }
@@ -42,6 +41,7 @@ class RestauranteRepository {
       const result = await database.client.query("SELECT * FROM usuario");
 
       const restaurantes = result.rows.filter(usuario => usuario.provedor)
+
       return restaurantes;
     } catch (err) {
       return err;
@@ -58,6 +58,21 @@ class RestauranteRepository {
 
       `, palavra)
     } catch(err) {
+      return err
+    }
+  }
+
+  async findRestauranteByName(nome_restaurante) {
+    console.log(nome_restaurante)
+    console.log("dasdasd")
+    try {
+      const result = await database.client.query(`
+        SELECT * FROM usuario
+        WHERE nome LIKE $1
+      `, [`%${nome_restaurante}%`])
+
+      return result.rows
+    } catch (err) {
       return err
     }
   }
