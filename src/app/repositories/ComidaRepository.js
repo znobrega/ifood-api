@@ -17,6 +17,24 @@ class ComidaRepository {
       return err;
     }
   }
+
+  async findMostPopular() {
+    try {
+      const result = await database.client.query(`
+        SELECT comida.nome, id_comida, COUNT(*) AS VezesPedida, SUM(quantidade) AS QuantidadeDeComida, usuario.nome AS NomeRestaurante
+        FROM detalhes_pedido
+        INNER JOIN comida ON comida.id = detalhes_pedido.id_comida
+        INNER JOIN pedido ON pedido.id = detalhes_pedido.id_pedido
+        INNER JOIN usuario ON pedido.id_restaurante = usuario.id
+        GROUP BY id_comida, comida.nome, usuario.nome
+        ORDER BY QuantidadeDeComida DESC;
+      `)
+
+      return result.rows
+    } catch(err) {
+      return err;
+    }
+  }
 }
 
 export default new ComidaRepository();

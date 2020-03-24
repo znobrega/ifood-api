@@ -1,5 +1,3 @@
-import database from "../../database";
-
 import ClienteRepository from "../repositories/ClienteRepository";
 
 class ClienteController {
@@ -35,7 +33,7 @@ class ClienteController {
 
   async show(req, res) {
     try {
-      const cliente = await ClienteRepository.findOne(req.body.id_cliente);
+      const cliente = await ClienteRepository.findOne(req.params.id_cliente);
       return res.json({ cliente });
     } catch (err) {
       console.log(err);

@@ -1,4 +1,5 @@
 import RestauranteRepository from "../repositories/RestauranteRepository";
+
 class RestauranteController {
   async store(req, res) {
     const {
@@ -43,7 +44,7 @@ class RestauranteController {
   async show(req, res) {
     try {
       const restaurante = await RestauranteRepository.findOne(
-        req.body.id_restaurante
+        req.params.id_restaurante
       );
       return res.json({ restaurante });
     } catch (err) {

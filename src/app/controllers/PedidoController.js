@@ -1,7 +1,6 @@
 import ComidaRepository from "../repositories/ComidaRepository";
-import RestauranteRepository from "../repositories/RestauranteRepository";
 
-class ComidaController {
+class PedidoController {
   async store(req, res) {
     const { id_restaurante, id_cliente } = req.body;
 
@@ -31,7 +30,6 @@ class ComidaController {
 
     return res.json({comidas});
   }
-
 }
 
-export default new ComidaController();
+export default new PedidoController();

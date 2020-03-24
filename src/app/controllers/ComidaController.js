@@ -1,5 +1,4 @@
 import ComidaRepository from "../repositories/ComidaRepository";
-import RestauranteRepository from "../repositories/RestauranteRepository";
 
 class ComidaController {
   async store(req, res) {
@@ -27,7 +26,7 @@ class ComidaController {
   }
 
   async index(req, res) {
-    const { id_restaurante } = req.body;
+    const { id_restaurante } = req.query;
 
     
     if (!id_restaurante) {
@@ -39,6 +38,15 @@ class ComidaController {
     return res.json({comidas});
   }
 
+  async comidasPopulares(req, res) {
+    try {
+      const comidas = await ComidaRepository.findMostPopular();
+
+      return res.json({ comidas })
+    } catch(err) {
+      return res.json(err)
+    }
+  }
 }
 
 export default new ComidaController();

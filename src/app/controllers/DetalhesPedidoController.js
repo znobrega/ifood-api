@@ -27,7 +27,7 @@ class DetalhesPedidoController {
 
 //     const comidas = await ComidaRepository.findAll(1);
 
-//     if (!id_restaurante) {
+//     if (!id_restaurante) {                
 //       res.status(404).json({ error: "É necessário escolher um restaurante" });
 //     }
 

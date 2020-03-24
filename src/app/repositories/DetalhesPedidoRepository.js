@@ -18,8 +18,6 @@ class DetalhesPedidoRepository {
       return err;
     }
   }
-
-
 }
 
 export default new DetalhesPedidoRepository();
