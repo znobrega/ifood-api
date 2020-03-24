@@ -131,15 +131,23 @@ class Database {
               INSERT INTO pedido(id_cliente, id_restaurante)
               VALUES 
               (1, 7),
-              (2, 8);
+              (2, 7),
+              (3, 8),
+              (3, 8),
+              (3, 8);
             `,
               err => {
                 this.client.query(
                 `
                 INSERT INTO detalhes_pedido(id_pedido, id_comida, quantidade) 
                 VALUES 
-                (1, 1, 2),
-                (2, 2, 3);
+                (1, 5, 1),
+                (2, 5, 2),
+                (2, 5, 3),
+                (2, 5, 4),
+                (3, 8, 5),
+                (4, 9, 6),
+                (5, 10, 7);
               `,
                 err => {
                   if (!err) console.log("DETALHES PEDIDOS CRIADOS!");
@@ -159,9 +167,6 @@ class Database {
         else console.log(err);
       }
     );
-
-      
-      
   }
 }
 
