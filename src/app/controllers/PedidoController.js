@@ -37,6 +37,18 @@ class PedidoController {
 
     return res.json({pedidos})
   }
+
+  async relatorioDia(req, res) {
+    const relatorio1dia = await PedidoRepository.relatorioPorDia(1)
+    const relatorio7dias = await PedidoRepository.relatorioPorDia(7)
+    const relatorio30dias = await PedidoRepository.relatorioPorDia(30)
+
+    return res.json({
+      relatorio1dia,
+      relatorio7dias,
+      relatorio30dias
+    })
+  }
 }
 
 export default new PedidoController();

@@ -19,19 +19,6 @@ class PedidoRepository {
   }
 
   async historicoCliente(id_cliente) {
-    console.log(id_cliente)
-    console.log(id_cliente)
-    console.log(id_cliente)
-    console.log(id_cliente)
-
-    console.log(`
-    SELECT * FROM pedido
-    INNER JOIN detalhes_pedido
-    ON pedido.id = detalhes_pedido.id_pedido
-    INNER JOIN comida
-    ON detalhes_pedido.id_comida = comida.id
-    WHERE pedido.id_cliente = ${id_cliente}
-  `)
     try {
       const result = await database.client.query(`
         SELECT * FROM pedido
@@ -46,6 +33,23 @@ class PedidoRepository {
       return err;
     }
   }
+
+  async relatorioPorDia(dia) {
+    try {
+      const result = await database.client.query(`
+      SELECT * FROM pedido
+      WHERE pedido.data > CURRENT_DATE - interval '$1 day'
+      ORDER BY pedido.data
+      `, [dia]);
+      return result.rows;
+    } catch (err) {
+      return err;
+    }
+  }
+
+
+
+
 }
 
 export default new PedidoRepository();

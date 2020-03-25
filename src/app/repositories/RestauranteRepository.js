@@ -30,7 +30,7 @@ class RestauranteRepository {
         id_restaurante
       );
 
-      return result.rows[0];
+      return result.rows;
     } catch (err) {
       return err;
     }
