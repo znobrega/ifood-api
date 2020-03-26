@@ -33,10 +33,12 @@ routes.get("/cliente/:id_cliente", ClienteController.show);
 routes.post("/pedido/criar", PedidoController.store);
 routes.post("/pedido/historicocliente", PedidoController.historicoPedidosCliente);
 routes.get("/pedido/relatorio", PedidoController.relatorioDia);
+routes.put("/pedido/atualizarprecototal", PedidoController.updatePrecoPedido);
+
 // lista pedidos de um determinado restaurante
 // QUERY: id_restaurante
 routes.get("/pedido/listar", PedidoController.store);
-routes.post
+
 
 // id_pedido, id_comida, quantidade
 routes.post("/detalhes_pedido/inserircomida", DetalhesPedidoController.store);

@@ -47,6 +47,20 @@ class PedidoRepository {
     }
   }
 
+  async updatePrecototal(id_pedido, preco_total) {
+    try {
+      const result = await database.client.query(`
+      UPDATE pedido
+      SET preco_total = $2
+      WHERE id = $1 returning *;
+      `, [id_pedido, preco_total]);
+      return result.rows;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  
 
 
 

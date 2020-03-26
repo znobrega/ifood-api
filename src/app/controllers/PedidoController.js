@@ -49,6 +49,14 @@ class PedidoController {
       relatorio30dias
     })
   }
+
+  async updatePrecoPedido(req, res) {
+    const {id_pedido, preco_total} = req.body
+
+    const pedido = await PedidoRepository.updatePrecototal(id_pedido, preco_total)
+
+    return res.json({pedido})
+  }
 }
 
 export default new PedidoController();
