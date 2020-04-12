@@ -10,7 +10,7 @@ class RestauranteController {
       endereco,
       categoria,
       status,
-      tipo_entrega
+      tipo_entrega,
     } = req.body;
 
     if (!provedor) {
@@ -25,7 +25,7 @@ class RestauranteController {
       endereco,
       categoria,
       status,
-      tipo_entrega
+      tipo_entrega,
     ]);
 
     return res.json({ restaurante: restaurante });
@@ -44,7 +44,7 @@ class RestauranteController {
   async show(req, res) {
     try {
       const restaurante = await RestauranteRepository.findOne(
-        req.params.id_restaurante
+        req.query.id_restaurante
       );
       return res.json({ restaurante });
     } catch (err) {
@@ -58,8 +58,51 @@ class RestauranteController {
       const restaurante = await RestauranteRepository.findRestauranteByName(
         req.body.nome_restaurante
       );
-      
+
       return res.json({ restaurante });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async cardapio(req, res) {
+    console.log(req.query.id_restaurante);
+    try {
+      const cardapio = await RestauranteRepository.cardapio(
+        req.query.id_restaurante
+      );
+
+      return res.json({ cardapio });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async allEntregaGratis(req, res) {
+    try {
+      const restaurantes = await RestauranteRepository.findAllEntregaGratis();
+
+      return res.json({ restaurantes });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async allEntregaRapida(req, res) {
+    try {
+      const restaurantes = await RestauranteRepository.findAllEntregaRapida();
+
+      return res.json({ restaurantes });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async popular(req, res) {
+    try {
+      const restaurantes = await RestauranteRepository.findAllPopular();
+
+      return res.json({ restaurantes });
     } catch (err) {
       return res.json({ error: err });
     }

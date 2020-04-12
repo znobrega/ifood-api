@@ -12,7 +12,7 @@ class Database {
       database: process.env.DB_NAME,
       password: process.env.DB_PASS,
       port: process.env.DB_PORT,
-      ssl: true
+      ssl: true,
     });
 
     this.client.connect();
@@ -38,8 +38,9 @@ class Database {
         id_restaurante INTEGER NOT NULL, 
         nome VARCHAR(255) NOT NULL, 
         descricao TEXT NOT NULL,
-        preco MONEY DEFAULT 10 NOT NULL,
+        preco double precision DEFAULT 10 NOT NULL,
         promocao BOOLEAN DEFAULT FALSE,
+        cardapio BOOLEAN DEFAULT TRUE,
         FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
       );
 
@@ -48,8 +49,8 @@ class Database {
         id_cliente INTEGER NOT NULL, 
         id_restaurante INTEGER NOT NULL, 
         data TIMESTAMP NOT NULL DEFAULT NOW(),
-        preco_total MONEY NOT NULL DEFAULT 0,
-        frete MONEY NOT NULL DEFAULT 2,
+        preco_total double precision NOT NULL DEFAULT 0,
+        frete double precision NOT NULL DEFAULT 2,
         FOREIGN KEY (id_cliente) REFERENCES usuario(id), 
         FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
       );
@@ -58,14 +59,14 @@ class Database {
         id SERIAL PRIMARY KEY,
         id_pedido INTEGER NOT NULL, 
         id_comida INTEGER NOT NULL, 
-        preco_comida MONEY NOT NULL DEFAULT 10, 
+        preco_comida double precision NOT NULL DEFAULT 10, 
         quantidade INTEGER NOT NULL DEFAULT 1,
         data TIMESTAMP DEFAULT NOW(),
         FOREIGN KEY (id_pedido) REFERENCES pedido(id),
         FOREIGN KEY (id_pedido) REFERENCES comida(id)
       );
     `,
-      err => {
+      (err) => {
         if (!err) console.log("Database connected! \nTABELAS CRIADAS!");
         else console.log(err);
 
@@ -83,7 +84,7 @@ class Database {
               ('Carlos', 1234, 'carlos@gmail.com', 'bessa', false),
               ('Moura', 1234, 'moura@gmail.com', 'bancarios', false);
     `,
-      err => {
+      (err) => {
         if (!err) console.log("CLIENTES CRIADOS!");
         else console.log(err);
       }
@@ -101,31 +102,30 @@ class Database {
       ('Passagem', 1234, 'passagem@gmail.com', 'mangabeira', true, 'popular', 'aberto', 'rapida');
 
     `,
-      err => {
+      (err) => {
         this.client.query(
           `
           INSERT INTO comida(id_restaurante, nome, preco, descricao)
           VALUES 
-          (5, 'Sushi', 5, 'peça de peixe'),
-          (5, 'Temaki', 20, 'temaki recheado'),
-          (6, 'yakisoba', 5, 'macarrçao chines'),
-          (6, 'polvo com camarão', 20, 'frutos do mar'),
-          (7, 'Pizza de americana', 30, 'queijo, palmito, ervilha, ovo'),
-          (7, 'Pizza de bacon', 29, 'catupiry, bacon'),
-          (8, 'Arroz integral', 10, 'arroz'),
-          (8, 'Arroz Branco', 10, 'arroz'),
-          (8, 'Arroz com cenoura', 10, 'arroz'),
-          (8, 'Carne cozida', 10, 'carne'),
-          (8, 'Frango grelhado', 10, 'frango'),
-          (9, 'Salmão frito', 10, 'peixe'),
-          (9, 'Bacalhau frito', 10, 'peixe'),
-          (9, 'Baiacu cozido', 10, 'peixe'),
-          (10, 'Espaguete', 10, 'macarrão'),
-          (10, 'churrasco', 10, 'carne'),
-          (10, 'salada', 10, 'legumes');
+          (5, 'Sushi', 5.0, 'peça de peixe'),
+          (5, 'Temaki', 20.0, 'temaki recheado'),
+          (6, 'yakisoba', 5.0, 'macarrçao chines'),
+          (6, 'polvo com camarão', 20.0, 'frutos do mar'),
+          (7, 'Pizza de americana', 30.0, 'queijo, palmito, ervilha, ovo'),
+          (7, 'Pizza de bacon', 29.0, 'catupiry, bacon'),
+          (8, 'Arroz integral', 10.0, 'arroz'),
+          (8, 'Arroz Branco', 10.0, 'arroz'),
+          (8, 'Arroz com cenoura', 10.0, 'arroz'),
+          (8, 'Carne cozida', 10.0, 'carne'),
+          (8, 'Frango grelhado', 10.0, 'frango'),
+          (9, 'Salmão frito', 10.0, 'peixe'),
+          (9, 'Bacalhau frito', 10.0, 'peixe'),
+          (9, 'Baiacu cozido', 10.0, 'peixe'),
+          (10, 'Espaguete', 10.0, 'macarrão'),
+          (10, 'churrasco', 10.0, 'carne'),
+          (10, 'salada', 10.0, 'legumes');
         `,
-          err => {
-            
+          (err) => {
             this.client.query(
               `
               INSERT INTO pedido(id_cliente, id_restaurante)
@@ -136,24 +136,25 @@ class Database {
               (3, 8),
               (3, 8);
             `,
-              err => {
+              (err) => {
                 this.client.query(
-                `
+                  `
                 INSERT INTO detalhes_pedido(id_pedido, id_comida, quantidade) 
                 VALUES 
                 (1, 5, 1),
-                (2, 5, 2),
-                (2, 5, 3),
-                (2, 5, 4),
+                (2, 5, 7),
+                (2, 6, 3),
                 (3, 8, 5),
+                (3, 7, 5),
+                (3, 9, 15),
                 (4, 9, 6),
                 (5, 10, 7);
               `,
-                err => {
-                  if (!err) console.log("DETALHES PEDIDOS CRIADOS!");
-                  else console.log(err);
-                }
-              );
+                  (err) => {
+                    if (!err) console.log("DETALHES PEDIDOS CRIADOS!");
+                    else console.log(err);
+                  }
+                );
                 if (!err) console.log("PEDIDOS CRIADOS!");
                 else console.log(err);
               }

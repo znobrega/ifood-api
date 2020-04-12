@@ -11,7 +11,6 @@ class ComidaRepository {
         data
       );
 
-      console.log(result);
       return result.rows[0];
     } catch (err) {
       return err;
@@ -21,34 +20,54 @@ class ComidaRepository {
   async findMostPopular() {
     try {
       const result = await database.client.query(`
-        SELECT comida.nome, id_comida, COUNT(*) AS VezesPedida, SUM(quantidade) AS QuantidadeDeComida, usuario.nome AS NomeRestaurante
+        SELECT comida.nome, id_comida, COUNT(*) AS VezesPedida, SUM(quantidade) AS QuantidadeDeComida, 
+        usuario.nome AS NomeRestaurante, 
+        usuario.id AS id_restaurante
         FROM detalhes_pedido
         INNER JOIN comida ON comida.id = detalhes_pedido.id_comida
         INNER JOIN pedido ON pedido.id = detalhes_pedido.id_pedido
         INNER JOIN usuario ON pedido.id_restaurante = usuario.id
-        GROUP BY id_comida, comida.nome, usuario.nome
+        GROUP BY id_comida, comida.nome, usuario.nome, usuario.id
         ORDER BY QuantidadeDeComida DESC;
-      `)
+      `);
 
-      return result.rows
-    } catch(err) {
+      return result.rows;
+    } catch (err) {
       return err;
     }
   }
 
   async findComidaByName(nome_comida) {
-    console.log(nome_comida)
     try {
-      const result = await database.client.query(`
-        SELECT * FROM comida
+      const result = await database.client.query(
+        `
+        SELECT comida.nome as comida_nome, * FROM comida
         INNER JOIN usuario
         ON comida.id_restaurante = usuario.id  
         WHERE comida.nome LIKE $1
-      `, [`%${nome_comida}%`])
+      `,
+        [`%${nome_comida}%`]
+      );
 
-      return result.rows
+      return result.rows;
     } catch (err) {
-      return err
+      return err;
+    }
+  }
+
+  async findComidaPromocao() {
+    try {
+      const result = await database.client.query(
+        `
+        SELECT * FROM comida
+        WHERE promocao = true
+      `
+      );
+
+      return result.rows;
+    } catch (err) {
+      console.log(err);
+      return err;
     }
   }
 }

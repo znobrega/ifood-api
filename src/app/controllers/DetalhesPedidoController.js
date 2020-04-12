@@ -4,36 +4,38 @@ class DetalhesPedidoController {
   async store(req, res) {
     const { id_pedido, id_comida, quantidade } = req.body;
 
-    
     if (!id_pedido) {
-        res.status(404).json({ error: "É Necessário passar o id do pedido" });
+      res.status(404).json({ error: "É Necessário passar o id do pedido" });
     }
-    
-    if (!id_comida) {
-        res.status(404).json({ error: "É Necessário passar o id de uma comida" });
-    }
-    
-    if (!quantidade) {
-        quantidade = 1;
-    }
-    
-    const destalhesPedido = await DetalhesPedidoRepository.insertOne(id_pedido, id_comida, quantidade);
 
-    return res.json(restaurante);
+    if (!id_comida) {
+      res.status(404).json({ error: "É Necessário passar o id de uma comida" });
+    }
+
+    if (!quantidade) {
+      quantidade = 1;
+    }
+
+    const detalhesPedido = await DetalhesPedidoRepository.insertOne(
+      id_pedido,
+      id_comida,
+      quantidade
+    );
+
+    return res.json({ detalhesPedido });
   }
 
-//   async index(req, res) {
-//     const { id_restaurante } = req.body;
+  //   async index(req, res) {
+  //     const { id_restaurante } = req.body;
 
-//     const comidas = await ComidaRepository.findAll(1);
+  //     const comidas = await ComidaRepository.findAll(1);
 
-//     if (!id_restaurante) {                
-//       res.status(404).json({ error: "É necessário escolher um restaurante" });
-//     }
+  //     if (!id_restaurante) {
+  //       res.status(404).json({ error: "É necessário escolher um restaurante" });
+  //     }
 
-//     return res.json({comidas});
-//   }
-
+  //     return res.json({comidas});
+  //   }
 }
 
 export default new DetalhesPedidoController();

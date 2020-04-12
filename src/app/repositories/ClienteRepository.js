@@ -14,7 +14,6 @@ class ClienteRepository {
         cliente
       );
 
-      console.log(result);
       return result.rows[0];
     } catch (err) {
       return err;
@@ -25,7 +24,7 @@ class ClienteRepository {
     try {
       const result = await database.client.query("SELECT * FROM usuario");
 
-      const clientes = result.rows.filter(usuario => !usuario.provedor);
+      const clientes = result.rows.filter((usuario) => !usuario.provedor);
       return clientes;
     } catch (err) {
       return err;
@@ -40,7 +39,6 @@ class ClienteRepository {
         idCliente
       );
 
-      console.log(result);
       return result.rows[0];
     } catch (err) {
       return err;

@@ -13,10 +13,8 @@ class ClienteController {
       senha,
       email,
       endereco,
-      provedor
+      provedor,
     ]);
-
-    console.log(cliente);
 
     return res.json({ cliente: cliente });
   }
@@ -40,7 +38,6 @@ class ClienteController {
       return res.json({ error: err });
     }
   }
-
 }
 
 export default new ClienteController();
