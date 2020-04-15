@@ -2,17 +2,48 @@ import database from "../../database";
 
 class ComidaRepository {
   async insertOne(id_restaurante, nome, preco, descricao) {
-    data = [id_restaurante, nome, preco, descricao];
-
     try {
       const result = await database.client.query(
-        `INSERTO INTO comida(id_restaurante, nome, preco, descricao) 
+        `INSERT INTO comida(id_restaurante, nome, preco, descricao) 
         VALUES ($1, $2, $3, $4) RETURNING *`,
-        data
+        [id_restaurante, nome, preco, descricao]
       );
-
       return result.rows[0];
     } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
+  async updateOne(id_comida, nome, preco, descricao) {
+    try {
+      const result = await database.client.query(
+        `
+        UPDATE comida
+        SET nome = $1, preco = $2, descricao = $3
+        WHERE id = $4 returning *;
+        `,
+        [nome, preco, descricao, id_comida]
+      );
+
+      result.rows[0];
+    } catch (err) {
+      console.log(err);
+      return err;
+    }
+  }
+
+  async deleteFromCardapio(id_comida) {
+    try {
+      const result = await database.client.query(
+        `UPDATE comida
+        SET cardapio = false
+        WHERE id = $1 returning *; `,
+        [id_comida]
+      );
+      return result.rows[0];
+    } catch (err) {
+      console.log(err);
       return err;
     }
   }

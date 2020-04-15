@@ -49,7 +49,10 @@ class Database {
         id_cliente INTEGER NOT NULL, 
         id_restaurante INTEGER NOT NULL, 
         data TIMESTAMP NOT NULL DEFAULT NOW(),
+        tipo_entrega VARCHAR(255),
         preco_total double precision NOT NULL DEFAULT 0,
+        preco_cliente double precision NOT NULL DEFAULT 0,
+        preco_restaurante double precision NOT NULL DEFAULT 0,
         frete double precision NOT NULL DEFAULT 2,
         FOREIGN KEY (id_cliente) REFERENCES usuario(id), 
         FOREIGN KEY (id_restaurante) REFERENCES usuario(id)
@@ -128,13 +131,13 @@ class Database {
           (err) => {
             this.client.query(
               `
-              INSERT INTO pedido(id_cliente, id_restaurante)
+              INSERT INTO pedido(id_cliente, id_restaurante, preco_total, preco_restaurante, preco_cliente)
               VALUES 
-              (1, 7),
-              (2, 7),
-              (3, 8),
-              (3, 8),
-              (3, 8);
+              (1, 7, 30, 30, 30),
+              (2, 7, 10, 20, 30),
+              (3, 8, 250, 250, 250),
+              (3, 8, 60, 60, 60),
+              (3, 8, 70, 70, 70);
             `,
               (err) => {
                 this.client.query(

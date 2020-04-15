@@ -3,7 +3,7 @@ import PedidoRepository from "../repositories/PedidoRepository";
 
 class PedidoController {
   async store(req, res) {
-    const { id_restaurante, id_cliente } = req.body;
+    const { id_restaurante, id_cliente, tipo_entrega } = req.body;
 
     if (!id_restaurante) {
       res.status(404).json({ error: "É necessário escolher um restaurante" });
@@ -13,7 +13,11 @@ class PedidoController {
       res.status(404).json({ error: "É necessário ter um cliente" });
     }
 
-    const pedido = await PedidoRepository.insertOne(id_restaurante, id_cliente);
+    const pedido = await PedidoRepository.insertOne(
+      id_restaurante,
+      id_cliente,
+      tipo_entrega
+    );
 
     return res.json({ pedido });
   }
@@ -38,6 +42,14 @@ class PedidoController {
     return res.json({ pedidos });
   }
 
+  async historicoPedidosRestaurante(req, res) {
+    const pedidos = await PedidoRepository.historicoRestaurante(
+      req.query.id_restaurante
+    );
+
+    return res.json({ pedidos });
+  }
+
   async relatorioDia(req, res) {
     const relatorio1dia = await PedidoRepository.relatorioPorDia(1);
     const relatorio7dias = await PedidoRepository.relatorioPorDia(7);
@@ -51,11 +63,30 @@ class PedidoController {
   }
 
   async updatePrecoPedido(req, res) {
-    const { id_pedido, preco_total } = req.body;
+    let { id_pedido, preco_total, tipo_entrega } = req.body;
 
+    let preco_restaurante = preco_total;
+    let preco_cliente = preco_total;
+
+    if (tipo_entrega === "gratis") {
+      preco_restaurante = preco_total - 2;
+    }
+
+    if (tipo_entrega === "rapida") {
+      preco_total = preco_total + 2;
+      preco_restaurante = preco_total;
+      preco_cliente = preco_total;
+    }
+
+    console.log("----PRCOS DO NOVO PEDIDO----");
+    console.log(preco_total);
+    console.log(preco_restaurante);
+    console.log(preco_cliente);
     const pedido = await PedidoRepository.updatePrecototal(
       id_pedido,
-      preco_total
+      preco_total,
+      preco_restaurante,
+      preco_cliente
     );
 
     return res.json({ pedido });

@@ -9,8 +9,6 @@ class UsuarioRepository {
         [email]
       );
 
-      console.log(result.rows);
-
       return result.rows;
     } catch (err) {
       console.log(err);

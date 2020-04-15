@@ -1,12 +1,12 @@
 import database from "../../database";
 
 class PedidoRepository {
-  async insertOne(id_restaurante, id_cliente) {
+  async insertOne(id_restaurante, id_cliente, tipo_entrega) {
     try {
       const result = await database.client.query(
-        `INSERT INTO pedido(id_restaurante, id_cliente) 
-        VALUES ($1, $2) RETURNING *`,
-        [id_restaurante, id_cliente]
+        `INSERT INTO pedido(id_restaurante, id_cliente, tipo_entrega) 
+        VALUES ($1, $2, $3) RETURNING *`,
+        [id_restaurante, id_cliente, tipo_entrega]
       );
 
       console.log(result.rows);
@@ -23,9 +23,27 @@ class PedidoRepository {
         `
         SELECT pedido.id as id_pedido, * FROM pedido
         INNER JOIN usuario ON pedido.id_restaurante = usuario.id
-        WHERE pedido.id_cliente = $1;
+        WHERE pedido.id_cliente = $1
+        ORDER BY pedido.data DESC;
       `,
         [id_cliente]
+      );
+      return result.rows;
+    } catch (err) {
+      return err;
+    }
+  }
+
+  async historicoRestaurante(id_restaurante) {
+    try {
+      const result = await database.client.query(
+        `
+        SELECT pedido.id as id_pedido, * FROM pedido
+        INNER JOIN usuario ON pedido.id_cliente = usuario.id
+        WHERE pedido.id_restaurante = $1
+        ORDER BY pedido.data DESC;
+      `,
+        [id_restaurante]
       );
       return result.rows;
     } catch (err) {
@@ -49,15 +67,20 @@ class PedidoRepository {
     }
   }
 
-  async updatePrecototal(id_pedido, preco_total) {
+  async updatePrecototal(
+    id_pedido,
+    preco_total,
+    preco_restaurante,
+    preco_cliente
+  ) {
     try {
       const result = await database.client.query(
         `
       UPDATE pedido
-      SET preco_total = $2
+      SET preco_total = $2, preco_restaurante = $3, preco_cliente = $4
       WHERE id = $1 returning *;
       `,
-        [id_pedido, preco_total]
+        [id_pedido, preco_total, preco_restaurante, preco_cliente]
       );
       console.log("PRECO TOTAL =====================");
       console.log(result.rows);

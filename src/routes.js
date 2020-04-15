@@ -37,10 +37,10 @@ routes.get("/restaurante/:id_restaurante", RestauranteController.show);
 routes.post("/comida/adicionarcomida", ComidaController.store);
 routes.post("/comida/encontrarcomidapornome", ComidaController.comidaByName);
 routes.get("/comida/promocao", ComidaController.comidaPromocao);
-// lista comidas de um determinado restaurante
-// QUERY: id_restaurante
 routes.get("/comida/listar", ComidaController.index);
 routes.get("/comida/populares", ComidaController.comidasPopulares);
+routes.put("/comida/delete", ComidaController.deleteFromCardapio);
+routes.put("/comida/update", ComidaController.update);
 
 routes.post("/cliente/criar", ClienteController.store);
 routes.get("/cliente/listar", ClienteController.index);
@@ -50,6 +50,10 @@ routes.post("/pedido/criar", PedidoController.store);
 routes.get(
   "/pedido/historicocliente",
   PedidoController.historicoPedidosCliente
+);
+routes.get(
+  "/pedido/historicorestaurante",
+  PedidoController.historicoPedidosRestaurante
 );
 routes.get("/pedido/comidas", PedidoController.comidasPedido);
 routes.get("/pedido/relatorio", PedidoController.relatorioDia);

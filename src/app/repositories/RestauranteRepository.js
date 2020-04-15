@@ -14,8 +14,6 @@ class RestauranteRepository {
         restaurante
       );
 
-      console.log(result);
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       return err;
@@ -111,8 +109,6 @@ class RestauranteRepository {
   }
 
   async findRestauranteByName(nome_restaurante) {
-    console.log(nome_restaurante);
-    console.log("dasdasd");
     try {
       const result = await database.client.query(
         `
@@ -140,7 +136,6 @@ class RestauranteRepository {
         [id_restaurante]
       );
 
-      console.log(result.rows);
       return result.rows;
     } catch (err) {
       return err;

@@ -24,7 +24,6 @@ class ClienteController {
       const clientes = await ClienteRepository.findAll();
       return res.json({ clientes });
     } catch (err) {
-      console.log(err);
       return res.json({ error: err });
     }
   }
@@ -34,7 +33,6 @@ class ClienteController {
       const cliente = await ClienteRepository.findOne(req.params.id_cliente);
       return res.json({ cliente });
     } catch (err) {
-      console.log(err);
       return res.json({ error: err });
     }
   }

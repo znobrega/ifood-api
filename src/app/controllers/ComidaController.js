@@ -48,6 +48,19 @@ class ComidaController {
     return res.json({ comidas });
   }
 
+  async update(req, res) {
+    const { id_comida, nome, preco, descricao } = req.body;
+
+    const comida = await ComidaRepository.updateOne(
+      id_comida,
+      nome,
+      preco,
+      descricao
+    );
+
+    return res.json({ comida });
+  }
+
   async comidasPopulares(req, res) {
     try {
       const comidas = await ComidaRepository.findMostPopular();
@@ -75,6 +88,17 @@ class ComidaController {
       const comidas = await ComidaRepository.findComidaPromocao();
 
       return res.json({ comidas });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async deleteFromCardapio(req, res) {
+    try {
+      const comida = await ComidaRepository.deleteFromCardapio(
+        req.body.id_comida
+      );
+      return res.json({ comida });
     } catch (err) {
       return res.json({ error: err });
     }
