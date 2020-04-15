@@ -9,7 +9,6 @@ class PedidoRepository {
         [id_restaurante, id_cliente, tipo_entrega]
       );
 
-      console.log(result.rows);
       return result.rows[0];
     } catch (err) {
       console.log(err);
@@ -82,9 +81,6 @@ class PedidoRepository {
       `,
         [id_pedido, preco_total, preco_restaurante, preco_cliente]
       );
-      console.log("PRECO TOTAL =====================");
-      console.log(result.rows);
-      console.log("PRECO TOTAL =====================");
       return result.rows;
     } catch (err) {
       return err;
@@ -101,7 +97,6 @@ class PedidoRepository {
       `,
         [id_pedido]
       );
-      console.log(result.rows);
       return result.rows;
     } catch (err) {
       console.log(err);

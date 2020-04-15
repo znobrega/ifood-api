@@ -36,7 +36,6 @@ class RestauranteController {
       const restaurantes = await RestauranteRepository.findAll();
       return res.json({ restaurantes });
     } catch (err) {
-      console.log(err);
       return res.json({ error: err });
     }
   }
@@ -48,7 +47,6 @@ class RestauranteController {
       );
       return res.json({ restaurante });
     } catch (err) {
-      console.log(err);
       return res.json({ error: err });
     }
   }
@@ -66,13 +64,25 @@ class RestauranteController {
   }
 
   async cardapio(req, res) {
-    console.log(req.query.id_restaurante);
     try {
       const cardapio = await RestauranteRepository.cardapio(
         req.query.id_restaurante
       );
 
       return res.json({ cardapio });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async comidaMaisPedia(req, res) {
+    console.log("Testando");
+    try {
+      const comida = await RestauranteRepository.comidaMaisPedida(
+        req.query.id_restaurante
+      );
+
+      return res.json({ comida });
     } catch (err) {
       return res.json({ error: err });
     }

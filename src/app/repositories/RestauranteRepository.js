@@ -141,6 +141,32 @@ class RestauranteRepository {
       return err;
     }
   }
+
+  async comidaMaisPedida(id_restaurante) {
+    try {
+      const result = await database.client.query(
+        `
+        SELECT usuario.id, 
+        usuario.nome, 
+        comida.id_restaurante, 
+        comida.id, comida.nome, 
+        SUM(detalhes_pedido.quantidade) AS quantidade_pedida 
+        FROM detalhes_pedido 
+        INNER JOIN comida ON detalhes_pedido.id_comida = comida.id 
+        INNER JOIN usuario ON comida.id_restaurante = usuario.id 
+        WHERE usuario.id = $1 
+        GROUP BY usuario.id, comida.id
+        ORDER BY quantidade_pedida DESC 
+        LIMIT 1;
+      `,
+        [id_restaurante]
+      );
+
+      return result.rows;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 export default new RestauranteRepository();

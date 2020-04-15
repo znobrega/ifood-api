@@ -32,6 +32,10 @@ routes.get(
 );
 routes.get("/restaurante/cardapio", RestauranteController.cardapio);
 routes.get("/restaurante/popular", RestauranteController.popular);
+routes.get(
+  "/restaurante/comidamaispedida",
+  RestauranteController.comidaMaisPedia
+);
 routes.get("/restaurante/:id_restaurante", RestauranteController.show);
 
 routes.post("/comida/adicionarcomida", ComidaController.store);

@@ -134,7 +134,7 @@ class Database {
               INSERT INTO pedido(id_cliente, id_restaurante, preco_total, preco_restaurante, preco_cliente)
               VALUES 
               (1, 7, 30, 30, 30),
-              (2, 7, 10, 20, 30),
+              (2, 7, 288, 288, 288),
               (3, 8, 250, 250, 250),
               (3, 8, 60, 60, 60),
               (3, 8, 70, 70, 70);

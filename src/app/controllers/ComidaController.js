@@ -49,19 +49,21 @@ class ComidaController {
   }
 
   async update(req, res) {
-    const { id_comida, nome, preco, descricao } = req.body;
+    const { id_comida, nome, preco, descricao, promocao } = req.body;
 
     const comida = await ComidaRepository.updateOne(
       id_comida,
       nome,
       preco,
-      descricao
+      descricao,
+      promocao
     );
 
     return res.json({ comida });
   }
 
   async comidasPopulares(req, res) {
+    console.log("ue");
     try {
       const comidas = await ComidaRepository.findMostPopular();
 

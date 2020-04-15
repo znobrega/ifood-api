@@ -78,10 +78,6 @@ class PedidoController {
       preco_cliente = preco_total;
     }
 
-    console.log("----PRCOS DO NOVO PEDIDO----");
-    console.log(preco_total);
-    console.log(preco_restaurante);
-    console.log(preco_cliente);
     const pedido = await PedidoRepository.updatePrecototal(
       id_pedido,
       preco_total,
@@ -93,8 +89,6 @@ class PedidoController {
   }
 
   async comidasPedido(req, res) {
-    console.log(req.query);
-    console.log(req.query.id_pedido);
     const comidas = await PedidoRepository.comidasPedido(req.query.id_pedido);
 
     return res.json({ comidas });

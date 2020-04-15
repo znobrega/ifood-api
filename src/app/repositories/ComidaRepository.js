@@ -20,10 +20,10 @@ class ComidaRepository {
       const result = await database.client.query(
         `
         UPDATE comida
-        SET nome = $1, preco = $2, descricao = $3
+        SET nome = $1, preco = $2, descricao = $3, promocao = $5
         WHERE id = $4 returning *;
         `,
-        [nome, preco, descricao, id_comida]
+        [nome, preco, descricao, id_comida, promocao]
       );
 
       result.rows[0];
@@ -48,7 +48,7 @@ class ComidaRepository {
     }
   }
 
-  async findMostPopular() {
+  async findMostPopularAntigo() {
     try {
       const result = await database.client.query(`
         SELECT comida.nome, id_comida, COUNT(*) AS VezesPedida, SUM(quantidade) AS QuantidadeDeComida, 
@@ -64,6 +64,27 @@ class ComidaRepository {
 
       return result.rows;
     } catch (err) {
+      return err;
+    }
+  }
+
+  async findMostPopular() {
+    try {
+      const result = await database.client.query(`
+        SELECT comida.nome, id_comida, COUNT(*) AS VezesPedida, SUM(quantidade) AS QuantidadeDeComida, 
+        usuario.nome AS NomeRestaurante, 
+        usuario.id AS id_restaurante
+        FROM detalhes_pedido
+        INNER JOIN comida ON comida.id = detalhes_pedido.id_comida
+        INNER JOIN pedido ON pedido.id = detalhes_pedido.id_pedido
+        INNER JOIN usuario ON comida.id_restaurante = usuario.id
+        GROUP BY id_comida, comida.nome, usuario.nome, usuario.id
+        ORDER BY QuantidadeDeComida DESC;
+      `);
+      console.log(result.rows);
+      return result.rows;
+    } catch (err) {
+      console.log(err);
       return err;
     }
   }
