@@ -2,16 +2,11 @@ import RestauranteRepository from "../repositories/RestauranteRepository";
 
 class RestauranteController {
   async store(req, res) {
-    const {
-      nome,
-      provedor,
-      senha,
-      email,
-      endereco,
-      categoria,
-      status,
-      tipo_entrega,
-    } = req.body;
+    console.log(req.body);
+    const { nome, provedor, senha, email, endereco, categoria } = req.body;
+
+    const status = "aberto";
+    const tipo_entrega = "rapida";
 
     if (!provedor) {
       return res.json({ error: "Cadastro do restaurante incompleto" });
@@ -76,7 +71,6 @@ class RestauranteController {
   }
 
   async comidaMaisPedia(req, res) {
-    console.log("Testando");
     try {
       const comida = await RestauranteRepository.comidaMaisPedida(
         req.query.id_restaurante
@@ -108,11 +102,46 @@ class RestauranteController {
     }
   }
 
+  async restaurantesPopularesMoura(req, res) {
+    try {
+      const restaurantes = await RestauranteRepository.restaurantesPopularesMoura();
+
+      return res.json({ restaurantes });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
   async popular(req, res) {
     try {
       const restaurantes = await RestauranteRepository.findAllPopular();
 
       return res.json({ restaurantes });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async precoMedio(req, res) {
+    try {
+      const comidas = await RestauranteRepository.precoMedio(
+        req.query.id_restaurante
+      );
+
+      return res.json({ comidas });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
+  async updateEntrega(req, res) {
+    try {
+      const restaurante = await RestauranteRepository.updateEntrega(
+        req.body.id_restaurante,
+        req.body.tipo_entrega
+      );
+
+      return res.json({ restaurante });
     } catch (err) {
       return res.json({ error: err });
     }

@@ -8,6 +8,9 @@ class ClienteController {
       return res.json({ error: "Cadastro do cliente incompleto" });
     }
 
+    console.log(nome);
+    console.log(email);
+
     const cliente = await ClienteRepository.criarCliente([
       nome,
       senha,
@@ -15,6 +18,8 @@ class ClienteController {
       endereco,
       provedor,
     ]);
+
+    console.log(cliente);
 
     return res.json({ cliente: cliente });
   }

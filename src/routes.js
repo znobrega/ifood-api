@@ -33,6 +33,12 @@ routes.get(
 routes.get("/restaurante/cardapio", RestauranteController.cardapio);
 routes.get("/restaurante/popular", RestauranteController.popular);
 routes.get(
+  "/restaurante/populares",
+  RestauranteController.restaurantesPopularesMoura
+);
+routes.get("/restaurante/precomedio", RestauranteController.precoMedio);
+routes.put("/restaurante/tipoentrega", RestauranteController.updateEntrega);
+routes.get(
   "/restaurante/comidamaispedida",
   RestauranteController.comidaMaisPedia
 );
