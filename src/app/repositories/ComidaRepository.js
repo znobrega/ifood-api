@@ -111,7 +111,8 @@ class ComidaRepository {
     try {
       const result = await database.client.query(
         `
-        SELECT * FROM comida
+        SELECT *, usuario.nome as nome_restaurante, comida.nome as nome_comida FROM comida
+        INNER JOIN usuario ON usuario.id = comida.id_restaurante
         WHERE promocao = true
       `
       );
