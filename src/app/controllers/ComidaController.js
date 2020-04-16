@@ -66,9 +66,18 @@ class ComidaController {
   }
 
   async comidasPopulares(req, res) {
-    console.log("ue");
     try {
       const comidas = await ComidaRepository.findMostPopular();
+
+      return res.json({ comidas });
+    } catch (err) {
+      return res.json(err);
+    }
+  }
+
+  async findMostPopularPedido(req, res) {
+    try {
+      const comidas = await ComidaRepository.findMostPopularPedido();
 
       return res.json({ comidas });
     } catch (err) {

@@ -2,7 +2,7 @@ import DetalhesPedidoRepository from "../repositories/DetalhesPedidoRepository";
 
 class DetalhesPedidoController {
   async store(req, res) {
-    const { id_pedido, id_comida, quantidade } = req.body;
+    const { id_pedido, id_comida, quantidade, preco } = req.body;
 
     if (!id_pedido) {
       res.status(404).json({ error: "É Necessário passar o id do pedido" });
@@ -19,7 +19,8 @@ class DetalhesPedidoController {
     const detalhesPedido = await DetalhesPedidoRepository.insertOne(
       id_pedido,
       id_comida,
-      quantidade
+      quantidade,
+      preco
     );
 
     return res.json({ detalhesPedido });

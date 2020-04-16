@@ -82,6 +82,18 @@ class RestauranteController {
     }
   }
 
+  async comidaMaisPedidaPedido(req, res) {
+    try {
+      const comida = await RestauranteRepository.comidaMaisPedidaPedido(
+        req.query.id_restaurante
+      );
+
+      return res.json({ comida });
+    } catch (err) {
+      return res.json({ error: err });
+    }
+  }
+
   async allEntregaGratis(req, res) {
     try {
       const restaurantes = await RestauranteRepository.findAllEntregaGratis();

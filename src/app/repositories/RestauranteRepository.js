@@ -168,6 +168,33 @@ class RestauranteRepository {
     }
   }
 
+  async comidaMaisPedidaPedido(id_restaurante) {
+    try {
+      const result = await database.client.query(
+        `
+        SELECT usuario.id, 
+        usuario.nome, 
+        comida.id_restaurante, 
+        comida.id, comida.nome, 
+        COUNT(*) AS vezes_pedida,
+        SUM(detalhes_pedido.quantidade) AS quantidade_pedida 
+        FROM detalhes_pedido 
+        INNER JOIN comida ON detalhes_pedido.id_comida = comida.id 
+        INNER JOIN usuario ON comida.id_restaurante = usuario.id 
+        WHERE usuario.id = $1 
+        GROUP BY usuario.id, comida.id
+        ORDER BY vezes_pedida DESC 
+        LIMIT 1;
+      `,
+        [id_restaurante]
+      );
+
+      return result.rows;
+    } catch (err) {
+      return err;
+    }
+  }
+
   async precoMedio(id_restaurante) {
     try {
       const result = await database.client.query(
@@ -175,8 +202,11 @@ class RestauranteRepository {
       SELECT usuario.id, 
       usuario.nome, 
       comida.id_restaurante, 
-      comida.id, comida.nome, 
-      AVG(detalhes_pedido.preco_comida) AS media FROM usuario 
+      comida.id, comida.nome,
+      COUNT(*) AS quantidade, 
+      AVG(detalhes_pedido.preco_comida) AS media, 
+      SUM(detalhes_pedido.preco_comida)/COUNT(*) AS media2
+      FROM usuario 
       INNER JOIN comida ON usuario.id = comida.id_restaurante 
       INNER JOIN detalhes_pedido ON comida.id = detalhes_pedido.id_comida 
       WHERE detalhes_pedido.data > NOW() - interval '8 day' AND usuario.id = $1

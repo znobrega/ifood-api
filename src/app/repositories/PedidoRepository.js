@@ -97,6 +97,9 @@ class PedidoRepository {
       `,
         [id_pedido]
       );
+      console.log("=======================");
+      console.log(result.rows);
+      console.log("=======================");
       return result.rows;
     } catch (err) {
       console.log(err);

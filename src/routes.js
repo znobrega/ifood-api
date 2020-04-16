@@ -42,6 +42,10 @@ routes.get(
   "/restaurante/comidamaispedida",
   RestauranteController.comidaMaisPedia
 );
+routes.get(
+  "/restaurante/comidamaispedidapedido",
+  RestauranteController.comidaMaisPedidaPedido
+);
 routes.get("/restaurante/:id_restaurante", RestauranteController.show);
 
 routes.post("/comida/adicionarcomida", ComidaController.store);
