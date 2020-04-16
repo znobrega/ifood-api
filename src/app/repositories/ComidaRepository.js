@@ -15,7 +15,7 @@ class ComidaRepository {
     }
   }
 
-  async updateOne(id_comida, nome, preco, descricao) {
+  async updateOne(id_comida, nome, preco, descricao, promocao) {
     try {
       const result = await database.client.query(
         `

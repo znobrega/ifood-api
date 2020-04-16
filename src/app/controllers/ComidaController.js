@@ -59,6 +59,9 @@ class ComidaController {
       promocao
     );
 
+    console.log(req.body);
+    console.log(comida);
+
     return res.json({ comida });
   }
 
