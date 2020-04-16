@@ -9,6 +9,7 @@ class PedidoRepository {
         [id_restaurante, id_cliente, tipo_entrega]
       );
 
+      console.log(result.rows);
       return result.rows[0];
     } catch (err) {
       console.log(err);
@@ -97,9 +98,6 @@ class PedidoRepository {
       `,
         [id_pedido]
       );
-      console.log("=======================");
-      console.log(result.rows);
-      console.log("=======================");
       return result.rows;
     } catch (err) {
       console.log(err);

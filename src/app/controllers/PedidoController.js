@@ -4,6 +4,8 @@ import PedidoRepository from "../repositories/PedidoRepository";
 class PedidoController {
   async store(req, res) {
     const { id_restaurante, id_cliente, tipo_entrega } = req.body;
+    console.log("req pedido");
+    console.log(req.body);
 
     if (!id_restaurante) {
       res.status(404).json({ error: "É necessário escolher um restaurante" });

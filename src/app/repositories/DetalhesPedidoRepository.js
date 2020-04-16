@@ -9,7 +9,6 @@ class DetalhesPedidoRepository {
         [id_pedido, id_comida, preco, quantidade]
       );
 
-      console.log(result.rows);
       return result.rows[0];
     } catch (err) {
       console.log(err);
