@@ -1,15 +1,17 @@
 import ClienteRepository from "../repositories/ClienteRepository";
+import UsuarioRepository from "../repositories/UsuarioRepository";
 
 class ClienteController {
   async store(req, res) {
     const { nome, senha, email, endereco, provedor } = req.body;
+    const emailExists = await UsuarioRepository.verifyExistingEmail(email);
 
     if (provedor) {
-      return res.json({ error: "Cadastro do cliente incompleto" });
+      return res.json({ error: "Cadastro do cliente incompleto!" });
     }
-
-    console.log(nome);
-    console.log(email);
+    else if (emailExists) {
+      return res.json({ error: "Email existente!" });
+    }
 
     const cliente = await ClienteRepository.criarCliente([
       nome,

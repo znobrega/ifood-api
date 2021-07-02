@@ -15,6 +15,19 @@ class UsuarioRepository {
       return err;
     }
   }
+
+  async verifyExistingEmail(email) {
+    try {
+      const result = await database.client.query(
+        `SELECT COUNT(*) FROM usuario WHERE email = $1`,
+        [email]
+      );
+
+      return result.rows[0].count > 0;
+    } catch (err) {
+      return err;
+    }
+  }
 }
 
 export default new UsuarioRepository();
