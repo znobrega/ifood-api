@@ -12,7 +12,7 @@ class RestauranteController {
     if (!provedor) {
       return res.json({ error: "Cadastro do restaurante incompleto!" });
     }
-    else if (emailExists) {
+    if (emailExists) {
       return res.json({ error: "Email existente!" });
     }
 

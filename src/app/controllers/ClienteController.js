@@ -9,7 +9,7 @@ class ClienteController {
     if (provedor) {
       return res.json({ error: "Cadastro do cliente incompleto!" });
     }
-    else if (emailExists) {
+    if (emailExists) {
       return res.json({ error: "Email existente!" });
     }
 

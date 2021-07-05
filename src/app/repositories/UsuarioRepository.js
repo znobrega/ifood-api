@@ -19,7 +19,7 @@ class UsuarioRepository {
   async verifyExistingEmail(email) {
     try {
       const result = await database.client.query(
-        `SELECT COUNT(*) FROM usuario WHERE email = $1`,
+        `SELECT COUNT(1) FROM usuario WHERE email = $1`,
         [email]
       );
 
