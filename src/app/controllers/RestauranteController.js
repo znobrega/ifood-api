@@ -1,15 +1,19 @@
 import RestauranteRepository from "../repositories/RestauranteRepository";
+import UsuarioRepository from "../repositories/UsuarioRepository";
 
 class RestauranteController {
   async store(req, res) {
-    console.log(req.body);
     const { nome, provedor, senha, email, endereco, categoria } = req.body;
 
     const status = "aberto";
     const tipo_entrega = "rapida";
+    const emailExists = await UsuarioRepository.verifyExistingEmail(email);
 
     if (!provedor) {
-      return res.json({ error: "Cadastro do restaurante incompleto" });
+      return res.json({ error: "Cadastro do restaurante incompleto!" });
+    }
+    if (emailExists) {
+      return res.json({ error: "Email existente!" });
     }
 
     const restaurante = await RestauranteRepository.criarRestaurante([
@@ -22,6 +26,8 @@ class RestauranteController {
       status,
       tipo_entrega,
     ]);
+
+    console.log(restaurante);
 
     return res.json({ restaurante: restaurante });
   }
