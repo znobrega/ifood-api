@@ -3,7 +3,7 @@ import UsuarioRepository from "../repositories/UsuarioRepository";
 class UsuarioController {
   async show(req, res) {
     try {
-      const usuario = await UsuarioRepository.findOne(req.query.email);
+      const usuario = await UsuarioRepository.findOne(req.query.email, req.query.senha);
       return res.json({ usuario });
     } catch (err) {
       console.log(err);
