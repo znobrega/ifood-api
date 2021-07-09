@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 // For a detailed explanation regarding each configuration property, visit:
 // https://jestjs.io/docs/en/configuration.html
-var jest = require("jest")
 
 module.exports = {
   // All imported modules in your tests should be mocked automatically

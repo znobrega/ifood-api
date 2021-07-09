@@ -23,16 +23,16 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">78.69% </span>
+                <span class="strong">75.76% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>48/61</span>
+                <span class='fraction'>50/66</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">66.67% </span>
+                <span class="strong">62.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>4/6</span>
+                <span class='fraction'>5/8</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.59% </span>
+                <span class="strong">74.19% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>45/58</span>
+                <span class='fraction'>46/62</span>
             </div>
         
             
@@ -220,23 +220,31 @@
 <a name='L161'></a><a href='#L161'>161</a>
 <a name='L162'></a><a href='#L162'>162</a>
 <a name='L163'></a><a href='#L163'>163</a>
-<a name='L164'></a><a href='#L164'>164</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L164'></a><a href='#L164'>164</a>
+<a name='L165'></a><a href='#L165'>165</a>
+<a name='L166'></a><a href='#L166'>166</a>
+<a name='L167'></a><a href='#L167'>167</a>
+<a name='L168'></a><a href='#L168'>168</a>
+<a name='L169'></a><a href='#L169'>169</a>
+<a name='L170'></a><a href='#L170'>170</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -245,7 +253,11 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -384,20 +396,24 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import RestauranteRepository from "../repositories/RestauranteRepository";<span class="branch-1 cbranch-no" title="branch not covered" ></span>
+import UsuarioRepository from "../repositories/UsuarioRepository";
 &nbsp;
 class RestauranteController {
   async store(req, res) {
-    console.log(req.body);
     const { nome, provedor, senha, email, endereco, categoria } = req.body;
 &nbsp;
     const status = "aberto";
     const tipo_entrega = "rapida";
+    const emailExists = await UsuarioRepository.verifyExistingEmail(email);
 &nbsp;
     <span class="missing-if-branch" title="if path not taken" >I</span>if (!provedor) {
-<span class="cstat-no" title="statement not covered" >      return res.json({ error: "Cadastro do restaurante incompleto" });</span>
+<span class="cstat-no" title="statement not covered" >      return res.json({ error: "Cadastro do restaurante incompleto!" });</span>
+    }
+    <span class="missing-if-branch" title="else path not taken" >E</span>if (emailExists) {
+      return res.json({ error: "Email existente!" });
     }
 &nbsp;
-    const restaurante = await RestauranteRepository.criarRestaurante([
+    const restaurante = <span class="cstat-no" title="statement not covered" >await RestauranteRepository.criarRestaurante([</span>
       nome,
       provedor,
       senha,
@@ -408,7 +424,9 @@ class RestauranteController {
       tipo_entrega,
     ]);
 &nbsp;
-    return res.json({ restaurante: restaurante });
+<span class="cstat-no" title="statement not covered" >    console.log(restaurante);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return res.json({ restaurante: restaurante });</span>
   }
 &nbsp;
   async index(req, res) {
@@ -553,7 +571,7 @@ export default new RestauranteController();
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Fri Jul 09 2021 02:28:43 GMT-0300 (Brasilia Standard Time)
+                at Fri Jul 09 2021 02:37:08 GMT-0300 (Brasilia Standard Time)
             </div>
         </div>
         <script src="../../../prettify.js"></script>
